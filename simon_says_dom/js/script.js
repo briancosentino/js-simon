@@ -10,27 +10,70 @@ Immaginate la logica come fosse uno snack: "Dati 2 array di numeri, indica quali
 /* Dom elements */
 const numberListEl = document.querySelector('#numbers-list')
 const countdownEl = document.getElementById('countdown') 
-let seconds = 3;
-console.log(countdownEl);
+const formEl = document.getElementById('answers-form')
+const inputElements = document.querySelectorAll('input')
+const messageEl = document.querySelector('#message')
+console.log(inputElements);
 
+//Global variable
+let seconds = 3;
+let randomNumbers =[] 
+let userChoice = []
+let generatedNumber;
+const rightNumbers = []
+
+
+
+//Generate random number funciton
 function generateRandomNumber () {
      return Math.floor(Math.random() * (50 - 1)) + 1
     };
 
-    
 
 function printNumber (){
     for (let i = 0; i < 5; i++){
-        numberListEl.innerHTML += `<li>${generateRandomNumber()}</li>`
+        randomNumbers.push(generateRandomNumber())
+        const thisNumber = randomNumbers[i]
+        numberListEl.innerHTML += `<li>${thisNumber}</li>`
+        
+        
+        console.log(thisNumber);
+        
     }
 }
 printNumber()
+console.log(generatedNumber);
+console.log(randomNumbers);
+
 
 const timer = setInterval(() => {
     seconds--
     countdownEl.innerText = seconds
     if (seconds === 0){
         clearInterval(timer)
+        numberListEl.classList.add('d-none')
+        countdownEl.classList.add('d-none')
+        formEl.classList.remove('d-none')
     }
     
 }, 1000);
+
+
+formEl.addEventListener('submit', (e)=>{
+    e.preventDefault()
+    for (let i =0; i < 5; i++){
+        userChoice.push(Number(inputElements[i].value))
+
+        if (userChoice.includes(randomNumbers[i])){
+            rightNumbers.push(randomNumbers[i])
+        }
+    } 
+    messageEl.innerText = `Complimenti hai indovinato ${rightNumbers.length} numeri, ${rightNumbers}`
+
+    console.log(userChoice);
+    
+    console.log(rightNumbers);
+    
+    
+    
+})
