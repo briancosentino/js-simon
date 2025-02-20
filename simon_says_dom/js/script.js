@@ -9,17 +9,28 @@ Immaginate la logica come fosse uno snack: "Dati 2 array di numeri, indica quali
 
 /* Dom elements */
 const numberListEl = document.querySelector('#numbers-list')
-console.log(numberListEl);
+const countdownEl = document.getElementById('countdown') 
+let seconds = 3;
+console.log(countdownEl);
 
-const randomNumber = ()=>{
+function generateRandomNumber () {
      return Math.floor(Math.random() * (50 - 1)) + 1
     };
-    console.log(randomNumber);
+
     
 
 function printNumber (){
     for (let i = 0; i < 5; i++){
-        /* numberListEl.innerHTML += `<li>${randomNumber}</li>` */
+        numberListEl.innerHTML += `<li>${generateRandomNumber()}</li>`
     }
 }
 printNumber()
+
+const timer = setInterval(() => {
+    seconds--
+    countdownEl.innerText = seconds
+    if (seconds === 0){
+        clearInterval(timer)
+    }
+    
+}, 1000);
